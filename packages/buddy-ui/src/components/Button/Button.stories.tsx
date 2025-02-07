@@ -1,8 +1,5 @@
 import { Button } from "./Button.tsx";
 import { Meta, StoryObj } from "@storybook/react";
-import { buttonStyles } from "./Button.styles.tsx";
-
-console.log(buttonStyles);
 
 const meta: Meta = {
   title: "Button",

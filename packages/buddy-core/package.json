@@ -1,0 +1,28 @@
+{
+  "name": "@buddy-builder/core",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "lint": "eslint ."
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.es.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
+    }
+  },
+  "devDependencies": {
+    "@buddy-builder/eslint-config": "^1.0.0",
+    "@buddy-builder/vite-config": "^1.0.0",
+    "eslint": "^9.19.0",
+    "prettier": "^3.4.2",
+    "typescript": "~5.7.2",
+    "vite": "^6.1.0"
+  }
+}

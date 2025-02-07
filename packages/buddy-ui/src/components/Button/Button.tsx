@@ -1,5 +1,5 @@
 import React from "react";
-import { buttonStyles, ButtonVariantProps } from "./Button.styles.tsx";
+import { buttonStyles, ButtonVariantProps } from "./Button.styles.ts";
 
 export type ButtonProps = React.ComponentProps<"button"> & ButtonVariantProps;
 
