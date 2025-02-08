@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
-import { Tree } from "./Tree.tsx";
 import { ChevronDown, ChevronRight } from "lucide-react";
+
+import { Tree } from "./Tree.tsx";
 import { treeItemStyles, TreeItemVariantProps } from "./TreeItem.styles.ts";
 
 export type TreeItemProps = React.ComponentPropsWithoutRef<"div"> & {
@@ -68,7 +69,7 @@ export function TreeItem({
       const currentIndex = Array.from(nextItem).indexOf(itemRef.current);
       const nextIndex = currentIndex + 1;
       const nextItemElement = nextItem[nextIndex] as HTMLElement;
-      nextItemElement.focus();
+      if (nextItemElement) nextItemElement.focus();
     }
 
     if (event.key === "ArrowUp" && itemRef.current) {
@@ -76,7 +77,7 @@ export function TreeItem({
       const currentIndex = Array.from(previousItem).indexOf(itemRef.current);
       const previousIndex = currentIndex - 1;
       const previousItemElement = previousItem[previousIndex] as HTMLElement;
-      previousItemElement.focus();
+      if (previousItemElement) previousItemElement.focus();
     }
   };
 

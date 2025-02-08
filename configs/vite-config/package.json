@@ -7,6 +7,10 @@
     "./lib": {
       "import": "./configs/vite.config.lib.js",
       "types": "./configs/index.d.ts"
+    },
+    "./app": {
+      "import": "./configs/vite.config.app.js",
+      "types": "./configs/index.d.ts"
     }
   },
   "files": [

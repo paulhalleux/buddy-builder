@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { EditInline } from "./EditInline.tsx";
 import { fn } from "@storybook/test";
+
+import { EditInline } from "./EditInline.tsx";
 
 const meta: Meta = {
   title: "EditInline",

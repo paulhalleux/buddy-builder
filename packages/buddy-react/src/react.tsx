@@ -1,14 +1,13 @@
 import React, { useCallback } from "react";
-
-import { create, UseBoundStore } from "zustand/react";
-import { StoreApi } from "zustand/vanilla";
 import {
   Builder,
   BuilderState,
   createBuilder,
   CreateBuilderParams,
 } from "@buddy-builder/core";
+import { create, UseBoundStore } from "zustand/react";
 import { useShallow } from "zustand/react/shallow";
+import { StoreApi } from "zustand/vanilla";
 
 // Register the store type
 declare module "@buddy-builder/core" {
@@ -46,7 +45,7 @@ export const BuddyProvider = React.createContext<Builder | null>(null);
 /**
  * Use the buddy context
  */
-export function useBuddyContext() {
+export function useBuddyInstance() {
   const buddy = React.use(BuddyProvider);
   if (!buddy) {
     throw new Error("Buddy context not found");
@@ -60,10 +59,10 @@ export function useBuddyContext() {
  * This hook is used to get the builder state
  * @param selector - Selector function
  */
-export function useBuilder<S>(
+export function useBuddyStore<S>(
   selector: (state: BuilderState, builder: Builder) => S,
 ) {
-  const buddy = useBuddyContext();
+  const buddy = useBuddyInstance();
   return buddy.store(
     useShallow(
       useCallback(

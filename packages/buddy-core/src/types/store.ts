@@ -1,6 +1,6 @@
+import { WritableDraft } from "immer";
 import { UseBoundStore } from "zustand/react";
 import { StoreApi } from "zustand/vanilla";
-import { WritableDraft } from "immer";
 
 /**
  * Store

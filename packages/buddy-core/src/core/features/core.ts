@@ -1,5 +1,5 @@
-import { BuilderFeature } from "../../types/feature.ts";
 import { BuilderWebsite } from "../../types/builder.ts";
+import { BuilderFeature } from "../../types/feature.ts";
 
 export namespace CoreFeature {
   export type State = {

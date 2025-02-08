@@ -1,18 +1,18 @@
 import { merge } from "lodash";
 
 import { createDefaultBuilderStore, createStoreUpdater } from "../store";
-
-import { BuilderFeature } from "../types/feature.ts";
-import { StoreBuilder } from "../types/store.ts";
 import {
   Builder,
   BuilderBase,
   BuilderState,
   BuilderStore,
 } from "../types/core.ts";
+import { BuilderFeature } from "../types/feature.ts";
+import { StoreBuilder } from "../types/store.ts";
+import { DeepPartial } from "../types/utils.ts";
 
 import { Core } from "./features/core.ts";
-import { DeepPartial } from "../types/utils.ts";
+import { Pages } from "./features/pages.ts";
 
 export type CreateBuilderParams = {
   initialState: DeepPartial<BuilderState>;
@@ -20,7 +20,7 @@ export type CreateBuilderParams = {
   features?: BuilderFeature<unknown, unknown>[];
 };
 
-const BUILT_IN_FEATURES: BuilderFeature<unknown, unknown>[] = [Core];
+const BUILT_IN_FEATURES: BuilderFeature<unknown, unknown>[] = [Core, Pages];
 
 /**
  * Create a new builder instance

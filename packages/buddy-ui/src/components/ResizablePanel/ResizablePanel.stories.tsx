@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
+
 import { ResizablePanel } from "./ResizablePanel.tsx";
 
 const meta: Meta = {

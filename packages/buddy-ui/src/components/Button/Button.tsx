@@ -1,4 +1,5 @@
 import React from "react";
+
 import { buttonStyles, ButtonVariantProps } from "./Button.styles.ts";
 
 export type ButtonProps = React.ComponentPropsWithoutRef<"button"> &
@@ -7,12 +8,14 @@ export type ButtonProps = React.ComponentPropsWithoutRef<"button"> &
 export function Button({
   size = "sm",
   intent = "primary",
+  icon = false,
   children,
+  className,
   ...props
 }: ButtonProps) {
-  const className = buttonStyles({ size, intent });
+  const classes = buttonStyles({ size, intent, icon, className });
   return (
-    <button className={className} {...props}>
+    <button className={classes} {...props}>
       {children}
     </button>
   );

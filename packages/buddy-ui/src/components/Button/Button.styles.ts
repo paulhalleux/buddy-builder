@@ -1,8 +1,16 @@
 import { tv, VariantProps } from "tailwind-variants";
 
 export const buttonStyles = tv({
-  base: ["cursor-pointer", "rounded-md", "font-medium"],
+  base: [
+    "cursor-pointer",
+    "rounded-md",
+    "font-medium",
+    "flex items-center gap-1",
+  ],
   variants: {
+    icon: {
+      true: ["aspect-square !px-0 justify-center"],
+    },
     intent: {
       primary: [
         "bg-neutral-100 hover:bg-neutral-50 active:bg-neutral-100",

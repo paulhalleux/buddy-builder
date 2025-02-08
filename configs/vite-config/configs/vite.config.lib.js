@@ -1,10 +1,10 @@
 import { resolve } from "path";
 
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import eslint from "vite-plugin-eslint";
-import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [
@@ -13,7 +13,6 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       tsconfigPath: resolve(process.cwd(), "tsconfig.app.json"),
-      rollupTypes: true,
     }),
     tailwindcss(),
   ],

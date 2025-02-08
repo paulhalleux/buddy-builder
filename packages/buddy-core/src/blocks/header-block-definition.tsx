@@ -1,5 +1,5 @@
-import { Control, ControlType } from "../types/control.ts";
 import { BlockDefinition } from "../types/block.ts";
+import { Control, ControlType } from "../types/control.ts";
 
 const createBlockDefinition = <Controls extends Record<string, Control>>(
   definition: BlockDefinition<Controls>,

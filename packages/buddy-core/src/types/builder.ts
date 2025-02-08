@@ -6,6 +6,7 @@ import { BlockInstance } from "./block.ts";
  * This type is used to define the page of the builder
  */
 export type BuilderPage = {
+  id: string;
   name: string;
   path: string;
   content: BlockInstance[];

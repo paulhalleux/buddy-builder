@@ -1,3 +1,4 @@
+import React, { useMemo } from "react";
 import {
   ImperativePanelHandle,
   Panel,
@@ -7,9 +8,8 @@ import {
   PanelResizeHandle,
   PanelResizeHandleProps,
 } from "react-resizable-panels";
-import React, { useMemo } from "react";
-import { useResizeObserver } from "usehooks-ts";
 import { clsx } from "clsx";
+import { useResizeObserver } from "usehooks-ts";
 
 const SizeContext = React.createContext<{
   direction?: "horizontal" | "vertical";

@@ -1,7 +1,7 @@
 {
   "name": "@buddy-builder/react",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "build": "vite build",
@@ -12,16 +12,11 @@
     "react-dom": "^19.0.0",
     "zustand": "^5.0.3"
   },
+  "main": "dist/index.es.js",
+  "types": "dist/index.ed.d.ts",
   "files": [
     "dist"
   ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.es.d.ts",
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js"
-    }
-  },
   "devDependencies": {
     "@buddy-builder/core": "^1.0.0",
     "@buddy-builder/eslint-config": "^1.0.0",

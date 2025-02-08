@@ -1,8 +1,10 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { Tree } from "./Tree.tsx";
 import React from "react";
-import { treeItemStyles } from "./TreeItem.styles.ts";
+import { Meta, StoryObj } from "@storybook/react";
+
 import { EditInline } from "../EditInline";
+
+import { Tree } from "./Tree.tsx";
+import { treeItemStyles } from "./TreeItem.styles.ts";
 
 const meta: Meta = {
   title: "Tree",

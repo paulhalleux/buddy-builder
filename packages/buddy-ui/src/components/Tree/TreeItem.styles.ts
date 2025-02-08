@@ -2,13 +2,13 @@ import { tv, VariantProps } from "tailwind-variants";
 
 export const treeItemStyles = tv({
   slots: {
-    slot: "",
+    slot: "shrink-0",
     container: "flex flex-col gap-[1px] select-none w-full",
     content: "text-xs px-1 w-full",
     treeWrapper: "",
     treeItem: [
       "hover:bg-neutral-100 rounded-sm flex items-center w-full",
-      "outline-none focus:ring focus:ring-blue-300",
+      "outline-none focus-visible:ring focus-visible:ring-blue-300",
     ],
     toggleButton: [
       "aspect-square rounded-sm flex items-center justify-center",
@@ -38,8 +38,8 @@ export const treeItemStyles = tv({
     },
     selected: {
       true: {
-        treeItem: "bg-blue-50 hover:!bg-blue-100 ring ring-blue-300",
-        toggleButton: "!bg-transparent hover:!bg-blue-200",
+        treeItem: "!bg-neutral-100",
+        toggleButton: "!bg-transparent hover:!bg-neutral-200",
       },
     },
   },

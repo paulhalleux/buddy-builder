@@ -1,6 +1,7 @@
 import React from "react";
-import { TreeItem } from "./TreeItem.tsx";
+
 import { treeStyles } from "./Tree.styles.ts";
+import { TreeItem } from "./TreeItem.tsx";
 
 export type TreeProps = React.ComponentProps<"ul">;
 

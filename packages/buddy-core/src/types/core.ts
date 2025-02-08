@@ -1,6 +1,9 @@
-import { CoreFeature } from "../core/features/core.ts";
-import { StoreUpdater } from "./store.ts";
 import { StoreApi } from "zustand/vanilla";
+
+import { CoreFeature } from "../core/features/core.ts";
+import { PagesFeature } from "../core/features/pages.ts";
+
+import { StoreUpdater } from "./store.ts";
 
 /**
  * Builder state
@@ -8,7 +11,7 @@ import { StoreApi } from "zustand/vanilla";
  * This type is used to define the state of the builder
  * It aggregates all the states of the features
  */
-export interface BuilderState extends CoreFeature.State {}
+export interface BuilderState extends CoreFeature.State, PagesFeature.State {}
 
 /**
  * Register builder types
@@ -44,4 +47,7 @@ export type BuilderBase = {
  * This type is used to define the builder
  * It includes all the features of the builder
  */
-export interface Builder extends BuilderBase, CoreFeature.Impl {}
+export interface Builder
+  extends BuilderBase,
+    CoreFeature.Impl,
+    PagesFeature.Impl {}

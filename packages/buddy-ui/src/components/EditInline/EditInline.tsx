@@ -4,11 +4,12 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { clsx } from "clsx";
+
 import {
   editInlineStyles,
   EditInlineVariantProps,
 } from "./EditInline.styles.ts";
-import { clsx } from "clsx";
 
 export type EditInlineRef = {
   focus: () => void;
@@ -23,6 +24,7 @@ export type EditInlineProps = Omit<
   onChange?: (value: string) => void;
   onConfirm?: (value: string) => void;
   onCancel?: (initialValue: string) => void;
+  editOnMount?: boolean;
 } & EditInlineVariantProps;
 
 export function EditInline({
@@ -33,6 +35,7 @@ export function EditInline({
   onCancel,
   onChange,
   onConfirm,
+  editOnMount,
   ...props
 }: EditInlineProps) {
   const initialValue = useRef(value);
@@ -93,9 +96,10 @@ export function EditInline({
 
   const onInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
+      e.stopPropagation();
+
       if (e.key === "Enter" || e.key === "Escape") {
         e.preventDefault();
-        e.stopPropagation();
       }
 
       if (e.key === "Enter") {
@@ -125,6 +129,8 @@ export function EditInline({
     [startEditing],
   );
 
+  const mounted = useRef(false);
+
   if (editing) {
     return (
       <input
@@ -142,6 +148,12 @@ export function EditInline({
 
   return (
     <span
+      ref={(instance) => {
+        if (instance && editOnMount && !mounted.current) {
+          mounted.current = true;
+          startEditing();
+        }
+      }}
       tabIndex={0}
       role="button"
       className={base()}

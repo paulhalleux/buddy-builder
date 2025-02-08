@@ -1,1 +1,5 @@
-export { EditInline } from "./EditInline.tsx";
+export {
+  EditInline,
+  type EditInlineRef,
+  type EditInlineProps,
+} from "./EditInline.tsx";
