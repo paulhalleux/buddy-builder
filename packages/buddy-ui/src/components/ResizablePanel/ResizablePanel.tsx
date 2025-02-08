@@ -7,9 +7,9 @@ import {
   PanelResizeHandle,
   PanelResizeHandleProps,
 } from "react-resizable-panels";
-import { cx } from "class-variance-authority";
 import React, { useMemo } from "react";
 import { useResizeObserver } from "usehooks-ts";
+import { clsx } from "clsx";
 
 const SizeContext = React.createContext<{
   direction?: "horizontal" | "vertical";
@@ -80,7 +80,7 @@ ResizablePanel.Handle = function Handle({
 }: PanelResizeHandleProps) {
   return (
     <PanelResizeHandle
-      className={cx(
+      className={clsx(
         [
           "data-[panel-group-direction=vertical]:border-t",
           "data-[panel-group-direction=horizontal]:border-l",

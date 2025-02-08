@@ -3,8 +3,10 @@ import { ResizablePanel } from "./ResizablePanel.tsx";
 
 const meta: Meta = {
   title: "ResizablePanel",
-  tags: ["autodocs"],
   component: ResizablePanel,
+  parameters: {
+    layout: "fullscreen",
+  },
 };
 
 export default meta;

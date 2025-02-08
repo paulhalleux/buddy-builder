@@ -1,5 +1,6 @@
 import { Button } from "./Button.tsx";
 import { Meta, StoryObj } from "@storybook/react";
+import { buttonStyles } from "./Button.styles.ts";
 
 const meta: Meta = {
   title: "Button",
@@ -10,11 +11,11 @@ const meta: Meta = {
   },
   argTypes: {
     size: {
-      options: ["sm", "md", "lg"],
+      options: Object.keys(buttonStyles.variants.size),
       control: { type: "select" },
     },
     intent: {
-      options: ["primary", "secondary", "subtle", "bordered"],
+      options: Object.keys(buttonStyles.variants.intent),
       control: { type: "select" },
     },
   },
