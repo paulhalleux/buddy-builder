@@ -18,15 +18,14 @@ export type EditInlineProps = Omit<
   React.ComponentPropsWithoutRef<"input">,
   keyof EditInlineVariantProps | "onChange" | "value"
 > & {
-  value: string;
-  ref: React.Ref<EditInlineRef>;
+  value?: string;
+  ref?: React.Ref<EditInlineRef>;
   onChange?: (value: string) => void;
   onConfirm?: (value: string) => void;
   onCancel?: (initialValue: string) => void;
 } & EditInlineVariantProps;
 
 export function EditInline({
-  size = "sm",
   outlined,
   className,
   ref,
@@ -42,7 +41,7 @@ export function EditInline({
   const [inputValue, setInputValue] = useState(value);
   const [editing, setEditing] = useState(false);
 
-  const { base, input } = editInlineStyles({ size, outlined, className });
+  const { base, input } = editInlineStyles({ outlined, className });
 
   const startEditing = useCallback(() => {
     setEditing(true);

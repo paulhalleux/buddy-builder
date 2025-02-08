@@ -1,32 +1,21 @@
-import React from "react";
-import { Control, ExtractControlsValue } from "./control.ts";
+import { BlockInstance } from "./block.ts";
 
-export type BlockRendererProps<Controls extends Record<string, Control>> = {
-  controls: ExtractControlsValue<Controls>;
-};
-
-export type BlockRenderer<Controls extends Record<string, Control>> =
-  React.ComponentType<BlockRendererProps<Controls>>;
-
-export type BlockDefinition<Controls extends Record<string, Control>> = {
-  id: string;
-  type: string;
-  name: string;
-  controls: Controls;
-  renderer: BlockRenderer<Controls>;
-};
-
-export type BlockInstance = {
-  definitionId: string;
-  id: string;
-  type: string;
-};
-
+/**
+ * Builder page
+ * ---
+ * This type is used to define the page of the builder
+ */
 export type BuilderPage = {
   name: string;
-  blocks: BlockInstance[];
+  path: string;
+  content: BlockInstance[];
 };
 
+/**
+ * Builder website
+ * ---
+ * This type is used to define the website of the builder
+ */
 export type BuilderWebsite = {
   name: string;
   pages: BuilderPage[];

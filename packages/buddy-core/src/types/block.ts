@@ -1,0 +1,23 @@
+import { Control, ExtractControlsValue } from "./control.ts";
+import React from "react";
+
+export type BlockRendererProps<Controls extends Record<string, Control>> = {
+  controls: ExtractControlsValue<Controls>;
+};
+
+export type BlockRenderer<Controls extends Record<string, Control>> =
+  React.ComponentType<BlockRendererProps<Controls>>;
+
+export type BlockDefinition<Controls extends Record<string, Control>> = {
+  id: string;
+  type: string;
+  name: string;
+  controls: Controls;
+  renderer: BlockRenderer<Controls>;
+};
+
+export type BlockInstance = {
+  definitionId: string;
+  id: string;
+  type: string;
+};

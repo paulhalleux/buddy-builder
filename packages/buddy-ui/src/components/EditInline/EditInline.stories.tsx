@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { EditInline } from "./EditInline.tsx";
-import { editInlineStyles } from "./EditInline.styles.ts";
 import { fn } from "@storybook/test";
 
 const meta: Meta = {
@@ -12,12 +11,6 @@ const meta: Meta = {
     onConfirm: fn(),
     onCancel: fn(),
   },
-  argTypes: {
-    size: {
-      options: Object.keys(editInlineStyles.variants.size),
-      control: { type: "select" },
-    },
-  },
 };
 
 export default meta;
@@ -27,7 +20,18 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     value: "Edit me",
-    size: "sm",
     outlined: false,
   },
+};
+
+export const Inherited: Story = {
+  args: {
+    value: "Edit me",
+    outlined: true,
+  },
+  render: (props) => (
+    <div className="text-blue-500 font-black text-4xl">
+      <EditInline {...props} />
+    </div>
+  ),
 };

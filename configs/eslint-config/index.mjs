@@ -73,6 +73,7 @@ export default [{
         "react/prop-types": "off",
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-empty-object-type": "off",
+        "@typescript-eslint/no-namespace": "off",
         "prettier/prettier": "error",
     },
 }];

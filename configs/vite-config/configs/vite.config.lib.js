@@ -12,6 +12,8 @@ export default defineConfig({
     eslint({ exclude: [/virtual:/, /node_modules/] }),
     dts({
       insertTypesEntry: true,
+      tsconfigPath: resolve(process.cwd(), "tsconfig.app.json"),
+      rollupTypes: true,
     }),
     tailwindcss(),
   ],
@@ -22,7 +24,7 @@ export default defineConfig({
     lib: {
       entry: resolve(process.cwd(), "src/index.ts"),
       name: "index",
-      formats: ["es", "umd"],
+      formats: ["es"],
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
