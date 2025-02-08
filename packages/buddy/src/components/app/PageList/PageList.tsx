@@ -20,11 +20,9 @@ export function PageList() {
 
   const onAddPage = () => {
     if (adding) {
-      const id = crypto.randomUUID();
-      builder.addPage({
-        id,
+      const { id } = builder.addPage({
         name: adding,
-        path: `/${adding.toLowerCase().replace(/\s/g, "-")}`,
+        path: adding.toLowerCase().replace(/\s/g, "-"),
         content: [],
       });
       builder.selectPage(id);
@@ -35,9 +33,8 @@ export function PageList() {
   return (
     <div className="flex flex-col h-full">
       <SectionHeader title="Pages">
-        <Button size="sm" onClick={() => setAdding("New page")}>
+        <Button icon size="sm" onClick={() => setAdding("New page")}>
           <PlusIcon size={12} />
-          Add page
         </Button>
       </SectionHeader>
       <div className="overflow-auto h-full pb-2 pt-1">
@@ -87,6 +84,11 @@ const PageItem = ({ page }: { page: BuilderPage }) => {
           size="lg"
           className="cursor-pointer"
           onClick={() => builder.selectPage(page.id)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              builder.selectPage(page.id);
+            }
+          }}
           label={
             <EditInline
               ref={editRef}

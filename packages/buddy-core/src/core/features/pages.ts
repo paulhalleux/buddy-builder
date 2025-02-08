@@ -17,12 +17,18 @@ export namespace PagesFeature {
      * Add a page to the website.
      * @param page The page to add.
      */
-    addPage: (page: BuilderPage) => void;
+    addPage: (page: Omit<BuilderPage, "id">) => BuilderPage;
     /**
      * Remove a page from the website.
      * @param pageId The ID of the page to remove.
      */
     removePage: (pageId: string) => void;
+    /**
+     * Update a page.
+     * @param pageId The ID of the page to update.
+     * @param page The updated page.
+     */
+    updatePage: (pageId: string, page: Partial<BuilderPage>) => void;
     /**
      * Get a page by its ID.
      * @param pageId The ID of the page.
@@ -34,12 +40,6 @@ export namespace PagesFeature {
      * @returns The pages.
      */
     getPages: () => BuilderPage[];
-    /**
-     * Update a page.
-     * @param pageId The ID of the page to update.
-     * @param page The updated page.
-     */
-    updatePage: (pageId: string, page: Partial<BuilderPage>) => void;
     /**
      * Select a page.
      * @param pageId The ID of the page to select.
@@ -64,11 +64,18 @@ export const Pages: BuilderFeature<PagesFeature.State, PagesFeature.Impl> = {
   getInitialState: () => ({
     selectedPageId: null,
   }),
-  create: ({ store, updateState }) => ({
+  create: ({ store, updateState, options }) => ({
     addPage: (page) => {
+      const newPage = {
+        id: options.generateId(),
+        ...page,
+      };
+
       updateState((draft) => {
-        draft.website.pages.push(page);
+        draft.website.pages.push(newPage);
       });
+
+      return newPage;
     },
     removePage: (pageId) => {
       updateState((draft) => {

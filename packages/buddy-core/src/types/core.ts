@@ -31,6 +31,15 @@ export type BuilderStore = Register extends {
   : StoreApi<BuilderState>;
 
 /**
+ * Builder options
+ * ---
+ * This type is used to define the options of the builder
+ */
+export type BuilderOptions = {
+  generateId: () => string;
+};
+
+/**
  * Base of the builder
  * ---
  * This type is used to define the base of the builder which includes the store and the update state function
@@ -39,6 +48,7 @@ export type BuilderStore = Register extends {
 export type BuilderBase = {
   store: BuilderStore;
   updateState: StoreUpdater<BuilderState>;
+  options: BuilderOptions;
 };
 
 /**

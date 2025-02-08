@@ -4,6 +4,7 @@ import { createDefaultBuilderStore, createStoreUpdater } from "../store";
 import {
   Builder,
   BuilderBase,
+  BuilderOptions,
   BuilderState,
   BuilderStore,
 } from "../types/core.ts";
@@ -18,6 +19,11 @@ export type CreateBuilderParams = {
   initialState: DeepPartial<BuilderState>;
   storeBuilder?: StoreBuilder<BuilderState, BuilderStore>;
   features?: BuilderFeature<unknown, unknown>[];
+  options?: DeepPartial<BuilderOptions>;
+};
+
+const DEFAULT_OPTIONS: BuilderOptions = {
+  generateId: () => crypto.randomUUID(),
 };
 
 const BUILT_IN_FEATURES: BuilderFeature<unknown, unknown>[] = [Core, Pages];
@@ -29,13 +35,16 @@ const BUILT_IN_FEATURES: BuilderFeature<unknown, unknown>[] = [Core, Pages];
  * @param initialState - Initial state of the builder
  * @param features - Features of the builder
  * @param storeBuilder - Store builder
+ * @param options - Options of the builder
  */
 export function createBuilder({
   initialState,
   features,
   storeBuilder = createDefaultBuilderStore,
+  options,
 }: CreateBuilderParams) {
   const allFeatures = [...BUILT_IN_FEATURES, ...(features || [])];
+  const mergedOptions = merge(DEFAULT_OPTIONS, options);
 
   // Aggregate the initial state of all features
   const featureInitialState: BuilderState = allFeatures.reduce(
@@ -51,6 +60,7 @@ export function createBuilder({
   const base: BuilderBase = {
     store,
     updateState,
+    options: mergedOptions,
   };
 
   return allFeatures.reduce((acc, feature) => {

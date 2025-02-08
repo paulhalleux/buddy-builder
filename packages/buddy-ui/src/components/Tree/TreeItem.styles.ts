@@ -8,7 +8,7 @@ export const treeItemStyles = tv({
     treeWrapper: "",
     treeItem: [
       "hover:bg-neutral-100 rounded-sm flex items-center w-full",
-      "outline-none focus-visible:ring focus-visible:ring-blue-300",
+      "outline-none focus-visible:ring focus-visible:ring-blue-500",
     ],
     toggleButton: [
       "aspect-square rounded-sm flex items-center justify-center",

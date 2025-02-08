@@ -4,3 +4,4 @@ export * from "./ResizablePanel";
 export * from "./EditInline";
 export * from "./Popover";
 export * from "./ContextMenu";
+export * from "./Input";
