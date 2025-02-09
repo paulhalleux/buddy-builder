@@ -1,5 +1,5 @@
 import { useBuddyInstance, useBuddyStore } from "@buddy-builder/react";
-import { Button, Input } from "@buddy-builder/ui";
+import { Button, EmptyState, Input } from "@buddy-builder/ui";
 import { Trash2 } from "lucide-react";
 
 import { SectionHeader } from "../../shared";
@@ -14,6 +14,8 @@ export function PageEditor() {
       const firstPage = builder.getPages()[0];
       if (firstPage) {
         builder.selectPage(firstPage.id);
+      } else {
+        builder.deselectPage();
       }
     }
   };
@@ -27,23 +29,29 @@ export function PageEditor() {
           </Button>
         )}
       </SectionHeader>
-      <div className="p-2 flex flex-col gap-2">
-        <Input
-          size="md"
-          value={selectedPage?.name}
-          onChange={(e) =>
-            builder.updatePage(selectedPage!.id, { name: e.target.value })
-          }
-        />
-        <Input
-          size="md"
-          value={selectedPage?.path}
-          prepend="/"
-          onChange={(e) =>
-            builder.updatePage(selectedPage!.id, { path: e.target.value })
-          }
-        />
-      </div>
+      {selectedPage ? (
+        <div className="p-2 pt-1 flex flex-col gap-2">
+          <Input
+            size="md"
+            value={selectedPage?.name}
+            onChange={(e) =>
+              builder.updatePage(selectedPage!.id, { name: e.target.value })
+            }
+          />
+          <Input
+            size="md"
+            value={selectedPage?.path}
+            prepend="/"
+            onChange={(e) =>
+              builder.updatePage(selectedPage!.id, { path: e.target.value })
+            }
+          />
+        </div>
+      ) : (
+        <div className="h-16">
+          <EmptyState description={"Select a page to edit"} />
+        </div>
+      )}
     </div>
   );
 }

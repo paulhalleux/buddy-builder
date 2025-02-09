@@ -13,11 +13,10 @@ export function WebsiteEditor() {
         defaultSize={300}
       >
         <ResizablePanel direction="vertical">
-          <ResizablePanel.Panel minSize={200} defaultSize={200}>
+          <div className="border-b border-neutral-200 max-h-[200px]">
             <PageList />
-          </ResizablePanel.Panel>
-          <ResizablePanel.Handle />
-          <ResizablePanel.Panel minSize={300}></ResizablePanel.Panel>
+          </div>
+          <div>Content</div>
         </ResizablePanel>
       </ResizablePanel.Panel>
       <ResizablePanel.Handle />
@@ -29,13 +28,9 @@ export function WebsiteEditor() {
         maxSize={400}
         defaultSize={300}
       >
-        <ResizablePanel direction="vertical">
-          <ResizablePanel.Panel minSize={150} defaultSize={200}>
-            <PageEditor />
-          </ResizablePanel.Panel>
-          <ResizablePanel.Handle />
-          <ResizablePanel.Panel minSize={300}></ResizablePanel.Panel>
-        </ResizablePanel>
+        <div className="border-b border-neutral-200 max-h-[200px]">
+          <PageEditor />
+        </div>
       </ResizablePanel.Panel>
     </ResizablePanel>
   );

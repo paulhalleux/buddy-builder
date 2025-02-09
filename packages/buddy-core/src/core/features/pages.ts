@@ -1,5 +1,6 @@
-import { BuilderPage } from "../../types/builder.ts";
+import { BuilderPage, BuilderPageInit } from "../../types/builder.ts";
 import { BuilderFeature } from "../../types/feature.ts";
+import { deepFind, findAndAct } from "../../utils/recursive-find.ts";
 
 export namespace PagesFeature {
   /**
@@ -7,6 +8,7 @@ export namespace PagesFeature {
    */
   export type State = {
     selectedPageId: string | null;
+    expandedPages: string[];
   };
 
   /**
@@ -17,7 +19,7 @@ export namespace PagesFeature {
      * Add a page to the website.
      * @param page The page to add.
      */
-    addPage: (page: Omit<BuilderPage, "id">) => BuilderPage;
+    addPage: (page: BuilderPageInit, parentId?: string) => BuilderPage;
     /**
      * Remove a page from the website.
      * @param pageId The ID of the page to remove.
@@ -57,70 +59,136 @@ export namespace PagesFeature {
      * Get the selected page.
      */
     getSelectedPage: () => BuilderPage | undefined;
+    /**
+     * Get the expanded pages.
+     */
+    getExpandedPages: () => string[];
+    /**
+     * Expand a page.
+     * @param pageId The ID of the page to expand.
+     */
+    expandPage: (pageId: string) => void;
+    /**
+     * Collapse a page.
+     * @param pageId The ID of the page to collapse.
+     */
+    collapsePage: (pageId: string) => void;
   };
 }
 
 export const Pages: BuilderFeature<PagesFeature.State, PagesFeature.Impl> = {
   getInitialState: () => ({
     selectedPageId: null,
+    expandedPages: [],
   }),
-  create: ({ store, updateState, options }) => ({
-    addPage: (page) => {
-      const newPage = {
-        id: options.generateId(),
-        ...page,
-      };
+  create({ store, updateState, options }) {
+    return {
+      addPage(page, parentId) {
+        const newPage: BuilderPage = {
+          ...page,
+          id: options.generateId(),
+          pages: [],
+          content: [],
+        } as BuilderPage;
 
-      updateState((draft) => {
-        draft.website.pages.push(newPage);
-      });
+        updateState((draft) => {
+          if (!parentId) {
+            draft.website.pages.push(newPage);
+            return;
+          }
 
-      return newPage;
-    },
-    removePage: (pageId) => {
-      updateState((draft) => {
-        draft.website.pages = draft.website.pages.filter(
-          (page) => page.id !== pageId,
+          findAndAct(
+            draft.website.pages,
+            (item) => item.id === parentId,
+            (page) => {
+              page.pages.push(newPage);
+            },
+            (item) => item.pages,
+          );
+        });
+
+        return newPage;
+      },
+      removePage(pageId) {
+        updateState((draft) => {
+          const index = draft.website.pages.findIndex(
+            (item) => item.id === pageId,
+          );
+
+          if (index !== -1) {
+            draft.website.pages.splice(index, 1);
+            return;
+          }
+
+          const parent = deepFind(
+            draft.website.pages,
+            (item) => item.pages.some((page) => page.id === pageId),
+            (item) => item.pages,
+          );
+
+          if (parent) {
+            const index = parent.pages.findIndex((page) => page.id === pageId);
+            parent.pages.splice(index, 1);
+          }
+        });
+      },
+      getPage(pageId) {
+        return deepFind(
+          store.getState().website.pages,
+          (item) => item.id === pageId,
+          (item) => item.pages,
         );
+      },
+      getPages() {
+        return store.getState().website.pages;
+      },
+      updatePage(pageId, page) {
+        updateState((draft) => {
+          const target = deepFind(
+            draft.website.pages,
+            (item) => item.id === pageId,
+            (item) => item.pages,
+          );
 
-        if (draft.selectedPageId === pageId) {
+          if (target) {
+            Object.assign(target, page);
+          }
+        });
+      },
+      selectPage(pageId) {
+        updateState((draft) => {
+          draft.selectedPageId = pageId;
+        });
+      },
+      deselectPage() {
+        updateState((draft) => {
           draft.selectedPageId = null;
-        }
-      });
-    },
-    getPage: (pageId) => {
-      return store.getState().website.pages.find((page) => page.id === pageId);
-    },
-    getPages: () => {
-      return store.getState().website.pages;
-    },
-    updatePage: (pageId, page) => {
-      updateState((draft) => {
-        const index = draft.website.pages.findIndex((p) => p.id === pageId);
-        if (index !== -1) {
-          draft.website.pages[index] = {
-            ...draft.website.pages[index],
-            ...page,
-          };
-        }
-      });
-    },
-    selectPage: (pageId) => {
-      updateState((draft) => {
-        draft.selectedPageId = pageId;
-      });
-    },
-    deselectPage: () => {
-      updateState((draft) => {
-        draft.selectedPageId = null;
-      });
-    },
-    getSelectedPageId: () => {
-      return store.getState().selectedPageId;
-    },
-    getSelectedPage: () => {
-      const { website, selectedPageId } = store.getState();
-      return website.pages.find((page) => page.id === selectedPageId);
-    },
-  }),
+        });
+      },
+      getSelectedPageId() {
+        return store.getState().selectedPageId;
+      },
+      getSelectedPage() {
+        const { selectedPageId } = store.getState();
+        if (!selectedPageId) return undefined;
+        return this.getPage(selectedPageId);
+      },
+      getExpandedPages() {
+        return store.getState().expandedPages;
+      },
+      expandPage(pageId) {
+        updateState((draft) => {
+          draft.expandedPages.push(pageId);
+        });
+      },
+      collapsePage(pageId) {
+        updateState((draft) => {
+          const index = draft.expandedPages.findIndex((id) => id === pageId);
+          if (index !== -1) {
+            draft.expandedPages.splice(index, 1);
+          }
+        });
+      },
+    };
+  },
 };

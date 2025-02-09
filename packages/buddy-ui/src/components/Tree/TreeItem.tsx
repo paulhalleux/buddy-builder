@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { PropsWithChildren, useRef } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
 import { Tree } from "./Tree.tsx";
@@ -9,7 +9,10 @@ export type TreeItemProps = React.ComponentPropsWithoutRef<"div"> & {
   expanded?: boolean;
   selected?: boolean;
   onExpand?: (expanded: boolean) => void;
+  renderItem?: React.ComponentType<PropsWithChildren>;
 } & TreeItemVariantProps;
+
+const defaultRenderer = ({ children }: PropsWithChildren) => <>{children}</>;
 
 export function TreeItem({
   size = "sm",
@@ -21,6 +24,7 @@ export function TreeItem({
   selected = false,
   onDoubleClick: _onDoubleClick,
   onKeyDown: _onKeyDown,
+  renderItem: RenderItem = defaultRenderer,
   ...props
 }: TreeItemProps) {
   const itemRef = useRef<HTMLDivElement>(null);
@@ -81,39 +85,43 @@ export function TreeItem({
     }
   };
 
+  const childCount = React.Children.toArray(children).length;
+
   return (
     <li className={container()}>
-      <div
-        ref={itemRef}
-        role="treeitem"
-        id="treeitem"
-        aria-selected
-        tabIndex={0}
-        onDoubleClick={onDoubleClick}
-        onKeyDown={onKeyDown}
-        className={treeItem({ className })}
-        {...props}
-      >
-        {children ? (
-          <div className="p-0.5">
-            <button
-              type="button"
-              tabIndex={-1}
-              className={toggleButton()}
-              onClick={(event) => {
-                event.stopPropagation();
-                onExpand(!expanded);
-              }}
-            >
-              <Icon size={14} />
-            </button>
-          </div>
-        ) : (
-          <div className={slot()} />
-        )}
-        <span className={content()}>{label}</span>
-      </div>
-      {children && expanded && (
+      <RenderItem>
+        <div
+          ref={itemRef}
+          role="treeitem"
+          id="treeitem"
+          aria-selected
+          tabIndex={0}
+          onDoubleClick={onDoubleClick}
+          onKeyDown={onKeyDown}
+          className={treeItem({ className })}
+          {...props}
+        >
+          {childCount > 0 ? (
+            <div className="p-0.5">
+              <button
+                type="button"
+                tabIndex={-1}
+                className={toggleButton()}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onExpand(!expanded);
+                }}
+              >
+                <Icon size={14} />
+              </button>
+            </div>
+          ) : (
+            <div className={slot()} />
+          )}
+          <span className={content()}>{label}</span>
+        </div>
+      </RenderItem>
+      {childCount > 0 && expanded && (
         <Tree className={treeWrapper()}>{children}</Tree>
       )}
     </li>

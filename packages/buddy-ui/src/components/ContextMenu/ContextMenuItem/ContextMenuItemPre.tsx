@@ -9,12 +9,7 @@ export function ContextMenuItemPre({
   ...props
 }: ContextMenuItemPreProps) {
   return (
-    <div
-      role="menuitem"
-      tabIndex={0}
-      className={clsx("w-[14px] mr-1.5", className)}
-      {...props}
-    >
+    <div className={clsx("w-[14px] mr-1.5", className)} {...props}>
       {children}
     </div>
   );

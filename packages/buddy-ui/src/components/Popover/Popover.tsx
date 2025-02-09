@@ -50,7 +50,10 @@ export function Popover({
   });
 
   const click = useClick(context, { enabled: openOnClick });
-  const hover = useHover(context, { enabled: openOnHover });
+  const hover = useHover(context, {
+    enabled: openOnHover,
+    delay: { open: 500, close: 1000 },
+  });
   const focus = useFocus(context, { enabled: openOnFocus });
   const dismiss = useDismiss(context);
 

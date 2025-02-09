@@ -5,3 +5,4 @@ export * from "./EditInline";
 export * from "./Popover";
 export * from "./ContextMenu";
 export * from "./Input";
+export * from "./EmptyState";
