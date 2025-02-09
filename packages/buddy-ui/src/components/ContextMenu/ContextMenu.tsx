@@ -66,6 +66,8 @@ export function ContextMenu({
         openOnFocus={!rightClick}
         openOnHover={!rightClick}
         openOnRightClick={rightClick}
+        openDelay={200}
+        closeDelay={800}
       >
         {trigger}
       </Popover>

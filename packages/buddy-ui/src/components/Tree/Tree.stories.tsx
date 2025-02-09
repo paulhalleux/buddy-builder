@@ -139,3 +139,30 @@ export const Editable: Story = {
     return <Tree>{renderTreeItems(TREE_ITEMS)}</Tree>;
   },
 };
+
+export const DeeplyNested: Story = {
+  args: {
+    size: "sm",
+  },
+  render: function Render() {
+    return (
+      <div className="w-64 h-32 border border-gray-200 overflow-auto">
+        <Tree>
+          <Tree.Item expanded label={crypto.randomUUID()}>
+            <Tree.Item expanded label={crypto.randomUUID()}>
+              <Tree.Item expanded label={crypto.randomUUID()}>
+                <Tree.Item label={crypto.randomUUID()} />
+                <Tree.Item label={crypto.randomUUID()} />
+              </Tree.Item>
+              <Tree.Item label={crypto.randomUUID()} />
+            </Tree.Item>
+            <Tree.Item expanded label={crypto.randomUUID()}>
+              <Tree.Item label={crypto.randomUUID()} />
+              <Tree.Item label={crypto.randomUUID()} />
+            </Tree.Item>
+          </Tree.Item>
+        </Tree>
+      </div>
+    );
+  },
+};

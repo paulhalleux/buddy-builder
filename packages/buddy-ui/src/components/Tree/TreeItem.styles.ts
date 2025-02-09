@@ -5,9 +5,9 @@ export const treeItemStyles = tv({
     slot: "shrink-0",
     container: "flex flex-col gap-[1px] select-none w-full",
     content: "text-xs px-1 w-full",
-    treeWrapper: "",
+    treeWrapper: "w-full",
     treeItem: [
-      "hover:bg-neutral-100 rounded-sm flex items-center w-full",
+      "hover:bg-neutral-100 rounded-sm flex items-center w-full text-nowrap",
       "outline-none focus-visible:ring focus-visible:ring-blue-500",
     ],
     toggleButton: [

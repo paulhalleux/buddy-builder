@@ -22,6 +22,8 @@ export type PopoverProps = {
   openOnRightClick?: boolean;
   content?: React.ReactNode;
   offset?: number;
+  openDelay?: number;
+  closeDelay?: number;
 } & Omit<React.ComponentPropsWithoutRef<"div">, "content">;
 
 export function Popover({
@@ -35,6 +37,8 @@ export function Popover({
   openOnRightClick = false,
   content,
   className,
+  openDelay,
+  closeDelay,
   offset: _offset,
   ...props
 }: PopoverProps) {
@@ -52,7 +56,7 @@ export function Popover({
   const click = useClick(context, { enabled: openOnClick });
   const hover = useHover(context, {
     enabled: openOnHover,
-    delay: { open: 500, close: 1000 },
+    delay: { open: openDelay, close: closeDelay },
   });
   const focus = useFocus(context, { enabled: openOnFocus });
   const dismiss = useDismiss(context);

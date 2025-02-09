@@ -1,1 +1,8 @@
 @import "@buddy-builder/tailwind-config";
+
+html,
+body,
+#root {
+  min-height: 100vh;
+  height: 100%;
+}

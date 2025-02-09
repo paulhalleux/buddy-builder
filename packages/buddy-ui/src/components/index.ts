@@ -6,3 +6,6 @@ export * from "./Popover";
 export * from "./ContextMenu";
 export * from "./Input";
 export * from "./EmptyState";
+export * from "./Toolbar";
+export * from "./Tooltip";
+export * from "./Collapsible";

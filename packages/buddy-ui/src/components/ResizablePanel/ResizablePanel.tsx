@@ -24,7 +24,7 @@ export function ResizablePanel({ children, ...props }: PanelGroupProps) {
   });
 
   return (
-    <div ref={ref} className="h-full w-full">
+    <div ref={ref} className="h-full w-full min-h-0 min-w-0">
       {height && width ? (
         <SizeContext value={{ height, width, direction: props.direction }}>
           <PanelGroup {...props}>{children}</PanelGroup>

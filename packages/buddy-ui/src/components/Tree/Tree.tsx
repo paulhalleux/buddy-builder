@@ -7,7 +7,6 @@ export type TreeProps = React.ComponentProps<"ul">;
 
 export function Tree({ children, className, ...props }: TreeProps) {
   const classes = treeStyles({ className });
-
   return (
     <ul role="tree" className={classes} {...props}>
       {children}
