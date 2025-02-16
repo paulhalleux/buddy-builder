@@ -1,5 +1,8 @@
+import { Color } from "../core";
+
 export type ColorPickerOptions<Ext = {}> = {
   root?: HTMLElement | string;
+  color: Color;
 } & Ext;
 
 export type ColorPicker = {

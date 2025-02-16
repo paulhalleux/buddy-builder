@@ -1,1 +1,1 @@
-export * from "./core/LightnessPicker.ts";
+export * from "./core";

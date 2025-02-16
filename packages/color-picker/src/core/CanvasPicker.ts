@@ -1,11 +1,11 @@
 import { Size, XYPosition } from "../types";
-import { rgbToHex } from "../utils/color.ts";
 
 import { BasePicker } from "./BasePicker.ts";
+import { Color } from "./Color.ts";
 import { Cursor } from "./Cursor.ts";
 
 export type CanvasPickerOptions = {
-  onChange?: (color: string, position: XYPosition) => void;
+  onChange?: (color: Color, position: XYPosition) => void;
   cursor?: {
     size?: number | (() => number);
     getPosition?: (pos: XYPosition) => XYPosition;
@@ -112,7 +112,7 @@ export abstract class CanvasPicker extends BasePicker {
       size: this._options.cursor?.size || 8,
       onMove: (pos) => {
         const color = this.getColorAtPosition(pos.x, pos.y);
-        this._options.onChange?.(color, pos);
+        if (color) this._options.onChange?.(color, pos);
       },
       getPosition: this._options.cursor?.getPosition,
     });
@@ -161,19 +161,19 @@ export abstract class CanvasPicker extends BasePicker {
    * @param y - The y position
    * @protected
    */
-  protected getColorAtPosition(x: number, y: number): string {
-    if (!this.canvas) return "";
-    const ctx = this.canvas.getContext("2d");
-    if (!ctx) return "";
+  protected getColorAtPosition(x: number, y: number): Color | null {
+    if (!this.ctx) {
+      return null;
+    }
 
-    const imageData = ctx.getImageData(
+    const imageData = this.ctx.getImageData(
       Math.max(x - 1, 0),
       Math.max(y - 1, 0),
       1,
       1,
     );
 
-    const [r, g, b] = imageData.data;
-    return rgbToHex(r, g, b);
+    const [r, g, b, a] = imageData.data;
+    return Color.fromRgb(r, g, b, a);
   }
 }

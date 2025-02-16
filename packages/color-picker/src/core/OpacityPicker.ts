@@ -2,30 +2,24 @@ import { ColorPickerOptions } from "../types";
 
 import { CanvasPicker } from "./CanvasPicker.ts";
 
-export type HuePickerOptions = ColorPickerOptions<{
+export type OpacityPickerOptions = ColorPickerOptions<{
   direction?: "horizontal" | "vertical";
-  color?: string;
-  initialOpacity?: number;
-  onChange?: (opacity: number) => void;
 }>;
 
-const FALLBACK_COLOR = "#000000";
-
 export class OpacityPicker extends CanvasPicker {
-  private readonly options: HuePickerOptions;
+  private readonly options: OpacityPickerOptions;
 
-  private color: string;
-  private currentOpacity = 1;
+  private readonly unregisterColorListener: () => void;
 
-  constructor(options: HuePickerOptions) {
+  constructor(options: OpacityPickerOptions) {
     super({
       onChange: (_, position) => {
         if (this.options.direction === "vertical") {
           const opacity = position.y / this.getSize().height;
-          this.setCurrentOpacity(opacity);
+          options.color.setAlpha(opacity);
         } else {
           const opacity = position.x / this.getSize().width;
-          this.setCurrentOpacity(opacity);
+          options.color.setAlpha(opacity);
         }
       },
       cursor: {
@@ -34,11 +28,11 @@ export class OpacityPicker extends CanvasPicker {
           if (this.options.direction === "vertical") {
             return {
               x: this.getSize().width / 2,
-              y: this.getSize().height * (options.initialOpacity ?? 0),
+              y: this.getSize().height * options.color.getAlpha(),
             };
           } else {
             return {
-              x: this.getSize().width * (options.initialOpacity ?? 0),
+              x: this.getSize().width * options.color.getAlpha(),
               y: this.getSize().height / 2,
             };
           }
@@ -68,11 +62,9 @@ export class OpacityPicker extends CanvasPicker {
 
     this.options = options;
 
-    this.color = options.color || FALLBACK_COLOR;
-    this.currentOpacity = options.initialOpacity || 1;
-
-    // initial callback
-    this.options.onChange?.(this.currentOpacity);
+    this.unregisterColorListener = this.options.color.subscribe(() => {
+      this.render();
+    });
 
     // mount the picker
     if (options.root) {
@@ -80,17 +72,9 @@ export class OpacityPicker extends CanvasPicker {
     }
   }
 
-  // --------------------- public methods ---------------------
-
-  setCurrentOpacity(opacity: number) {
-    this.currentOpacity = opacity;
-    this.options.onChange?.(opacity);
-    this.render();
-  }
-
-  setReferenceColor(color: string) {
-    this.color = color;
-    this.render();
+  onUnmount() {
+    super.onUnmount();
+    this.unregisterColorListener();
   }
 
   // --------------------- rendering ---------------------
@@ -104,7 +88,7 @@ export class OpacityPicker extends CanvasPicker {
         : context.createLinearGradient(0, 0, width, 0);
 
     gradient.addColorStop(0, "rgba(255, 255, 255, 0)");
-    gradient.addColorStop(1, this.color);
+    gradient.addColorStop(1, this.options.color.getRawColor().toRgbaString());
 
     context.fillStyle = gradient;
     context.fillRect(0, 0, width, height);
