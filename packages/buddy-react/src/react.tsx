@@ -4,13 +4,13 @@ import {
   BuilderState,
   createBuilder,
   CreateBuilderParams,
-} from "@buddy-builder/core";
+} from "@buddy/core";
 import { create, UseBoundStore } from "zustand/react";
 import { useShallow } from "zustand/react/shallow";
 import { StoreApi } from "zustand/vanilla";
 
 // Register the store type
-declare module "@buddy-builder/core" {
+declare module "@buddy/core" {
   interface Register {
     store: UseBoundStore<StoreApi<BuilderState>>;
   }

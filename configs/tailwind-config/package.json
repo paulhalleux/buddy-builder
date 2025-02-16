@@ -1,5 +1,5 @@
 {
-  "name": "@buddy-builder/tailwind-config",
+  "name": "@buddy/tailwind-config",
   "version": "1.0.0",
   "license": "proprietary",
   "private": true,

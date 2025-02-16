@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@buddy/color-picker</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
+
+      .color-picker {
+        width: 400px;
+        height: 400px;
+        overflow: hidden;
+      }
+
+      .current-color {
+        margin-top: 20px;
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+      }
+
+      .hue-picker {
+        width: 400px;
+        height: 20px;
+        overflow: hidden;
+      }
+    </style>
+</head>
+<body>
+<div id="color-picker" class="color-picker"></div>
+<div id="hue-picker" class="hue-picker"></div>
+<div id="current-color" class="current-color"></div>
+<script type="module">
+  import {LightnessPicker} from './src/index.js'
+  import {HuePicker} from "./src/core/index.js";
+
+  const currentColor = document.getElementById('current-color')
+  const lightnessPicker = new LightnessPicker({
+    root: "#color-picker",
+    onChange: (color) => {
+      currentColor.style.backgroundColor = color
+    }
+  })
+
+  const huePicker = new HuePicker({
+    root: "#hue-picker",
+    initialColor: "#ff0000",
+    direction: "horizontal",
+    onChange: (hue) => {
+      lightnessPicker.setReferenceColor(hue)
+    }
+  })
+</script>
+</body>
+</html>

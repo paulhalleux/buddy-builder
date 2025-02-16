@@ -1,1 +1,1 @@
-export { default } from "@buddy-builder/eslint-config";
+export { default } from "@buddy/eslint-config";

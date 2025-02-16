@@ -1,5 +1,5 @@
 {
-  "name": "@buddy-builder/ui",
+  "name": "@buddy/ui",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -30,9 +30,9 @@
     }
   },
   "devDependencies": {
-    "@buddy-builder/eslint-config": "^1.0.0",
-    "@buddy-builder/tailwind-config": "^1.0.0",
-    "@buddy-builder/vite-config": "^1.0.0",
+    "@buddy/eslint-config": "^1.0.0",
+    "@buddy/tailwind-config": "^1.0.0",
+    "@buddy/vite-config": "^1.0.0",
     "@chromatic-com/storybook": "3.2.4",
     "@storybook/addon-essentials": "8.5.3",
     "@storybook/addon-interactions": "8.5.3",

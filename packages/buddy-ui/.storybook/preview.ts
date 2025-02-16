@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/react";
 
-import "@buddy-builder/tailwind-config";
+import "@buddy/tailwind-config";
 
 const preview: Preview = {
   parameters: {

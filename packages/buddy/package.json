@@ -1,5 +1,5 @@
 {
-  "name": "@buddy-builder/app",
+  "name": "@buddy/app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -17,11 +17,11 @@
     "react-router-dom": "^7.1.5"
   },
   "devDependencies": {
-    "@buddy-builder/eslint-config": "^1.0.0",
-    "@buddy-builder/react": "^1.0.0",
-    "@buddy-builder/tailwind-config": "^1.0.0",
-    "@buddy-builder/ui": "^1.0.0",
-    "@buddy-builder/vite-config": "^1.0.0",
+    "@buddy/eslint-config": "^1.0.0",
+    "@buddy/react": "^1.0.0",
+    "@buddy/tailwind-config": "^1.0.0",
+    "@buddy/ui": "^1.0.0",
+    "@buddy/vite-config": "^1.0.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "eslint": "^9.19.0",

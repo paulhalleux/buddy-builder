@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { ResizablePanel, Toolbar, Tooltip } from "@buddy-builder/ui";
+import { ResizablePanel, Toolbar, Tooltip } from "@buddy/ui";
 import { Grid2X2Icon, LayersIcon } from "lucide-react";
 
+import { SectionHeader } from "../../shared";
 import { Canvas } from "../Canvas";
 import { PageEditor } from "../PageEditor";
 import { PageList } from "../PageList";
@@ -41,7 +42,9 @@ export function WebsiteEditor() {
           <div className="border-b border-neutral-200 max-h-[200px]">
             <PageList />
           </div>
-          <div>Content</div>
+          <div>
+            <SectionHeader title="Layers" />
+          </div>
         </ResizablePanel>
       </ResizablePanel.Panel>
       <ResizablePanel.Handle />
@@ -71,7 +74,9 @@ export function WebsiteEditor() {
         <div className="border-b border-neutral-200 max-h-[200px]">
           <PageEditor />
         </div>
-        <div>Controls</div>
+        <div>
+          <SectionHeader title="Controls" />
+        </div>
       </ResizablePanel.Panel>
     </ResizablePanel>
   );

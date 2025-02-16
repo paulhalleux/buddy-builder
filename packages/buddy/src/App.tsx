@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { BuddyProvider, useBuddy } from "@buddy-builder/react";
+import { BuddyProvider, useBuddy } from "@buddy/react";
 
 import { WebsiteEditor } from "./components/app";
 

@@ -1,4 +1,4 @@
-import { Button } from "@buddy-builder/ui";
+import { Button } from "@buddy/ui";
 
 import { ViewportModes } from "../WebsiteEditor/WebsiteEditor.tsx";
 

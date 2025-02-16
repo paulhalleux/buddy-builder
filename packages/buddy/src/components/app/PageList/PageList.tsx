@@ -1,5 +1,5 @@
-import { useBuddyStore } from "@buddy-builder/react";
-import { Button, EmptyState, Tree } from "@buddy-builder/ui";
+import { useBuddyStore } from "@buddy/react";
+import { Button, EmptyState, Tree } from "@buddy/ui";
 import { PlusIcon } from "lucide-react";
 
 import { SectionHeader } from "../../shared";

@@ -1,9 +1,10 @@
 {
-  "name": "@buddy/core",
+  "name": "@buddy/color-picker",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "dev": "vite",
     "build": "vite build",
     "lint": "eslint ."
   },
@@ -15,15 +16,10 @@
   "devDependencies": {
     "@buddy/eslint-config": "^1.0.0",
     "@buddy/vite-config": "^1.0.0",
-    "@types/lodash": "^4.17.15",
     "eslint": "^9.19.0",
     "prettier": "^3.4.2",
     "typescript": "~5.7.2",
     "vite": "^6.1.0"
   },
-  "dependencies": {
-    "immer": "^10.1.1",
-    "lodash": "^4.17.21",
-    "zustand": "^5.0.3"
-  }
+  "dependencies": {}
 }

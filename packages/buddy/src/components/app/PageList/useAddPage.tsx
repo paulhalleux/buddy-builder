@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { PageType } from "@buddy-builder/core/src";
-import { useBuddyInstance } from "@buddy-builder/react";
-import { EditInline, Tree } from "@buddy-builder/ui";
+import { PageType } from "@buddy/core/src";
+import { useBuddyInstance } from "@buddy/react";
+import { EditInline, Tree } from "@buddy/ui";
 
 export const useAddPage = (parentId?: string) => {
   const builder = useBuddyInstance();

@@ -1,12 +1,7 @@
 import { useRef } from "react";
-import { BuilderPage } from "@buddy-builder/core/src";
-import { useBuddyInstance, useBuddyStore } from "@buddy-builder/react";
-import {
-  ContextMenu,
-  EditInline,
-  EditInlineRef,
-  Tree,
-} from "@buddy-builder/ui";
+import { BuilderPage } from "@buddy/core/src";
+import { useBuddyInstance, useBuddyStore } from "@buddy/react";
+import { ContextMenu, EditInline, EditInlineRef, Tree } from "@buddy/ui";
 import {
   Edit2Icon,
   FileIcon,

@@ -1,1 +1,1 @@
-# @buddy-builder/ui
+# @buddy/react

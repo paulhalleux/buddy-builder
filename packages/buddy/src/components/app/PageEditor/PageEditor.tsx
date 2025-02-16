@@ -1,5 +1,5 @@
-import { useBuddyInstance, useBuddyStore } from "@buddy-builder/react";
-import { Button, Collapsible, EmptyState, Input } from "@buddy-builder/ui";
+import { useBuddyInstance, useBuddyStore } from "@buddy/react";
+import { Button, Collapsible, EmptyState, Input } from "@buddy/ui";
 import { Trash2 } from "lucide-react";
 
 import { SectionHeader } from "../../shared";
@@ -57,18 +57,6 @@ export function PageEditor() {
                   }
                 />
               </Collapsible.Content>
-            </Collapsible>
-            <Collapsible>
-              <Collapsible.Trigger className="select-none">
-                Subpages
-              </Collapsible.Trigger>
-              <Collapsible.Content className="flex flex-col gap-2"></Collapsible.Content>
-            </Collapsible>
-            <Collapsible>
-              <Collapsible.Trigger className="select-none">
-                Settings
-              </Collapsible.Trigger>
-              <Collapsible.Content className="flex flex-col gap-2"></Collapsible.Content>
             </Collapsible>
           </div>
         ) : (

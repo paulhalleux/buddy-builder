@@ -6,7 +6,7 @@ type SectionHeaderProps = React.PropsWithChildren<{
 
 export function SectionHeader({ title, children }: SectionHeaderProps) {
   return (
-    <header className="h-10 flex items-center justify-between px-2 shrink-0">
+    <header className="h-9 flex items-center justify-between px-2 shrink-0">
       <h2 className="text-sm font-medium">{title}</h2>
       <div>{children}</div>
     </header>

@@ -1,1 +1,1 @@
-export { default } from "@buddy-builder/vite-config/lib";
+export { default } from "@buddy/vite-config/lib";

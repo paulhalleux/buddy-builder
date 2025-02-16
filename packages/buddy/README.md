@@ -1,1 +1,1 @@
-# @buddy-builder/app
+# @buddy/app

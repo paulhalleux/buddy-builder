@@ -1,5 +1,5 @@
 {
-  "name": "@buddy-builder/vite-config",
+  "name": "@buddy/vite-config",
   "version": "1.0.0",
   "license": "proprietary",
   "private": true,
@@ -20,7 +20,7 @@
     "vite": "^6.1.0"
   },
   "devDependencies": {
-    "@buddy-builder/eslint-config": "^1.0.0",
+    "@buddy/eslint-config": "^1.0.0",
     "eslint": "^9.19.0",
     "prettier": "^3.4.2"
   },
