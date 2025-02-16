@@ -1,6 +1,5 @@
 export type ColorPickerOptions<Ext = {}> = {
   root?: HTMLElement | string;
-  onChange?: (color: string) => void;
 } & Ext;
 
 export type ColorPicker = {

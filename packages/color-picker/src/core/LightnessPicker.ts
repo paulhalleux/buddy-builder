@@ -5,6 +5,7 @@ import { CanvasPicker } from "./CanvasPicker.ts";
 export type LightnessPickerOptions = ColorPickerOptions<{
   referenceColor?: string;
   initialColor?: string;
+  onChange?: (opacity: string) => void;
 }>;
 
 const FALLBACK_COLOR = "#FF0000";
@@ -18,9 +19,11 @@ export class LightnessPicker extends CanvasPicker {
 
   constructor(options: LightnessPickerOptions) {
     super({
-      cursorSize: CURSOR_SIZE,
       onChange: (color) => {
         this.setCurrentColor(color);
+      },
+      cursor: {
+        size: CURSOR_SIZE,
       },
     });
 

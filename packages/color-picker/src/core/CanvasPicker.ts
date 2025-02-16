@@ -5,9 +5,12 @@ import { BasePicker } from "./BasePicker.ts";
 import { Cursor } from "./Cursor.ts";
 
 export type CanvasPickerOptions = {
-  cursorSize?: number;
-  onChange?: (color: string) => void;
-  getPosition?: (pos: XYPosition) => XYPosition;
+  onChange?: (color: string, position: XYPosition) => void;
+  cursor?: {
+    size?: number | (() => number);
+    getPosition?: (pos: XYPosition) => XYPosition;
+    getInitialPosition?: () => XYPosition;
+  };
 };
 
 export abstract class CanvasPicker extends BasePicker {
@@ -106,13 +109,17 @@ export abstract class CanvasPicker extends BasePicker {
   private setupCursor(element: HTMLElement) {
     this.cursor = new Cursor({
       parent: element,
-      size: this._options.cursorSize || 8,
+      size: this._options.cursor?.size || 8,
       onMove: (pos) => {
         const color = this.getColorAtPosition(pos.x, pos.y);
-        this._options.onChange?.(color);
+        this._options.onChange?.(color, pos);
       },
-      getPosition: this._options.getPosition,
+      getPosition: this._options.cursor?.getPosition,
     });
+
+    if (this._options.cursor?.getInitialPosition) {
+      this.cursor.setPosition(this._options.cursor.getInitialPosition());
+    }
   }
 
   /**

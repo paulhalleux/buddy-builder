@@ -14,45 +14,83 @@
 
       body {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
         height: 100vh;
-        background-color: #f0f0f0;
+        background-color: #fff;
+        gap: 20px;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 8px;
+        background: #ededed;
+        border-radius: 8px;
+        border: 1px solid #ccc;
       }
 
       .color-picker {
-        width: 400px;
-        height: 400px;
-        overflow: hidden;
+        width: 175px;
+        height: 175px;
+        border-radius: 5px;
+        outline: 1px solid #ccc;
+
+        canvas {
+          border-radius: 5px;
+        }
       }
 
       .current-color {
         margin-top: 20px;
         width: 100px;
         height: 100px;
-        overflow: hidden;
+        outline: 1px solid #ccc;
       }
 
+      .opacity-picker,
       .hue-picker {
-        width: 400px;
-        height: 20px;
-        overflow: hidden;
+        display: flex;
+        width: 175px;
+        height: 16px;
+        border-radius: 50px;
+        outline: 1px solid #ccc;
+
+        canvas {
+          border-radius: 50px;
+        }
       }
     </style>
 </head>
 <body>
-<div id="color-picker" class="color-picker"></div>
-<div id="hue-picker" class="hue-picker"></div>
+<div class="container">
+    <div id="color-picker" class="color-picker"></div>
+    <div id="hue-picker" class="hue-picker"></div>
+    <div id="opacity-picker" class="opacity-picker"></div>
+</div>
 <div id="current-color" class="current-color"></div>
 <script type="module">
   import {LightnessPicker} from './src/index.js'
   import {HuePicker} from "./src/core/index.js";
+  import {OpacityPicker} from "./src/core/OpacityPicker.js";
 
   const currentColor = document.getElementById('current-color')
+  const opacityPicker = new OpacityPicker({
+    root: "#opacity-picker",
+    color: "#ff0000",
+    initialOpacity: 1,
+    direction: "horizontal",
+    onChange: (opacity) => {
+      currentColor.style.opacity = opacity
+    }
+  })
+
   const lightnessPicker = new LightnessPicker({
     root: "#color-picker",
     onChange: (color) => {
+      opacityPicker.setReferenceColor(color)
       currentColor.style.backgroundColor = color
     }
   })

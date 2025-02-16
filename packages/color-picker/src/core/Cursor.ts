@@ -2,7 +2,7 @@ import { XYPosition } from "../types";
 
 export type CursorOptions = {
   parent: HTMLElement;
-  size: number;
+  size: number | (() => number);
   getPosition?: (pos: XYPosition) => XYPosition;
   onMove?: (position: XYPosition, event: MouseEvent) => void;
 };
@@ -18,9 +18,15 @@ export class Cursor {
     this.options = options;
     this.setupCursorElement();
     this.setupEvents();
+    this.render();
+  }
 
-    this.position = options.getPosition?.(this.position) || this.position;
-
+  /**
+   * Set the position of the cursor
+   * @param position - New position
+   */
+  setPosition(position: XYPosition) {
+    this.position = position;
     this.render();
   }
 
@@ -53,8 +59,14 @@ export class Cursor {
     if (!this.element) return;
     const { size } = this.options;
 
-    this.element.style.top = `${this.position.y - size / 2}px`;
-    this.element.style.left = `${this.position.x - size / 2}px`;
+    const adaptedPosition =
+      this.options.getPosition?.(this.position) || this.position;
+
+    const cursorSize = typeof size === "function" ? size() : size;
+    this.element.style.top = `${adaptedPosition.y - cursorSize / 2}px`;
+    this.element.style.left = `${adaptedPosition.x - cursorSize / 2}px`;
+    this.element.style.width = `${cursorSize}px`;
+    this.element.style.height = `${cursorSize}px`;
   }
 
   /**
@@ -65,18 +77,26 @@ export class Cursor {
     this.element = document.createElement("div");
 
     this.element.style.position = "absolute";
-    this.element.style.width = `${this.options.size}px`;
-    this.element.style.height = `${this.options.size}px`;
     this.element.style.border = "2px solid white";
     this.element.style.borderRadius = "50%";
     this.element.style.pointerEvents = "none";
+
+    const adaptedPosition =
+      this.options.getPosition?.(this.position) || this.position;
+
+    const { size } = this.options;
+    const cursorSize = typeof size === "function" ? size() : size;
+    this.element.style.top = `${adaptedPosition.y - cursorSize / 2}px`;
+    this.element.style.left = `${adaptedPosition.x - cursorSize / 2}px`;
+    this.element.style.width = `${cursorSize}px`;
+    this.element.style.height = `${cursorSize}px`;
 
     const { parent } = this.options;
     parent.appendChild(this.element);
   }
 
   /**
-   * Setup the cursor events
+   * Set up the cursor events
    * @private
    */
   private setupEvents() {
@@ -89,8 +109,7 @@ export class Cursor {
         e.clientY - rect.top,
       );
 
-      const basePosition = { x, y };
-      this.position = this.options.getPosition?.(basePosition) || basePosition;
+      this.position = { x, y };
 
       onMove?.({ x, y }, e);
 

@@ -4,23 +4,45 @@ import { CanvasPicker } from "./CanvasPicker.ts";
 
 export type HuePickerOptions = ColorPickerOptions<{
   direction?: "horizontal" | "vertical";
-  initialColor?: string;
-  onChange?: (opacity: string) => void;
+  color?: string;
+  initialOpacity?: number;
+  onChange?: (opacity: number) => void;
 }>;
 
-const FALLBACK_COLOR = "#FF0000";
+const FALLBACK_COLOR = "#000000";
 
-export class HuePicker extends CanvasPicker {
+export class OpacityPicker extends CanvasPicker {
   private readonly options: HuePickerOptions;
-  private currentColor: string;
+
+  private color: string;
+  private currentOpacity = 1;
 
   constructor(options: HuePickerOptions) {
     super({
-      onChange: (color) => {
-        this.setCurrentColor(color);
+      onChange: (_, position) => {
+        if (this.options.direction === "vertical") {
+          const opacity = position.y / this.getSize().height;
+          this.setCurrentOpacity(opacity);
+        } else {
+          const opacity = position.x / this.getSize().width;
+          this.setCurrentOpacity(opacity);
+        }
       },
       cursor: {
         size: () => this.getCursorSize(),
+        getInitialPosition: () => {
+          if (this.options.direction === "vertical") {
+            return {
+              x: this.getSize().width / 2,
+              y: this.getSize().height * (options.initialOpacity ?? 0),
+            };
+          } else {
+            return {
+              x: this.getSize().width * (options.initialOpacity ?? 0),
+              y: this.getSize().height / 2,
+            };
+          }
+        },
         getPosition: (pos) => {
           const cursorSize = this.getCursorSize();
           if (this.options.direction === "vertical") {
@@ -46,10 +68,11 @@ export class HuePicker extends CanvasPicker {
 
     this.options = options;
 
-    this.currentColor = options.initialColor || FALLBACK_COLOR;
+    this.color = options.color || FALLBACK_COLOR;
+    this.currentOpacity = options.initialOpacity || 1;
 
     // initial callback
-    this.options.onChange?.(this.currentColor);
+    this.options.onChange?.(this.currentOpacity);
 
     // mount the picker
     if (options.root) {
@@ -59,9 +82,14 @@ export class HuePicker extends CanvasPicker {
 
   // --------------------- public methods ---------------------
 
-  setCurrentColor(color: string) {
-    this.currentColor = color;
-    this.options.onChange?.(color);
+  setCurrentOpacity(opacity: number) {
+    this.currentOpacity = opacity;
+    this.options.onChange?.(opacity);
+    this.render();
+  }
+
+  setReferenceColor(color: string) {
+    this.color = color;
     this.render();
   }
 
@@ -75,23 +103,11 @@ export class HuePicker extends CanvasPicker {
         ? context.createLinearGradient(0, 0, 0, height)
         : context.createLinearGradient(0, 0, width, 0);
 
-    gradient.addColorStop(0, "#FF0000");
-    gradient.addColorStop(1 / 6, "#FFFF00");
-    gradient.addColorStop(2 / 6, "#00FF00");
-    gradient.addColorStop(3 / 6, "#00FFFF");
-    gradient.addColorStop(4 / 6, "#0000FF");
-    gradient.addColorStop(5 / 6, "#FF00FF");
-    gradient.addColorStop(1, "#FF0000");
+    gradient.addColorStop(0, "rgba(255, 255, 255, 0)");
+    gradient.addColorStop(1, this.color);
 
     context.fillStyle = gradient;
     context.fillRect(0, 0, width, height);
-  }
-
-  protected getColorAtPosition(x: number, y: number): string {
-    if (this.options.direction === "vertical") {
-      return super.getColorAtPosition(this.getSize().width / 2, y);
-    }
-    return super.getColorAtPosition(x, this.getSize().height / 2);
   }
 
   private getCursorSize() {
