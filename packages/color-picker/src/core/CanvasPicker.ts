@@ -80,6 +80,7 @@ export abstract class CanvasPicker extends BasePicker {
   }
 
   abstract renderCanvas(context: CanvasRenderingContext2D): void;
+  abstract getColorAtPosition(x: number, y: number): Color | undefined;
 
   /**
    * Set up the canvas element
@@ -151,29 +152,5 @@ export abstract class CanvasPicker extends BasePicker {
     // trigger initial resize
     const { height, width } = this.element.getBoundingClientRect();
     this.size = { height, width };
-  }
-
-  // --------------------- helper methods ---------------------
-
-  /**
-   * Get the color at the given position
-   * @param x - The x position
-   * @param y - The y position
-   * @protected
-   */
-  protected getColorAtPosition(x: number, y: number): Color | null {
-    if (!this.ctx) {
-      return null;
-    }
-
-    const imageData = this.ctx.getImageData(
-      Math.max(x - 1, 0),
-      Math.max(y - 1, 0),
-      1,
-      1,
-    );
-
-    const [r, g, b, a] = imageData.data;
-    return Color.fromRgb(r, g, b, a);
   }
 }

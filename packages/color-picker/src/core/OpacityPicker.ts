@@ -1,6 +1,7 @@
 import { ColorPickerOptions } from "../types";
 
 import { CanvasPicker } from "./CanvasPicker.ts";
+import { Color } from "./Color.ts";
 
 export type OpacityPickerOptions = ColorPickerOptions<{
   direction?: "horizontal" | "vertical";
@@ -13,14 +14,8 @@ export class OpacityPicker extends CanvasPicker {
 
   constructor(options: OpacityPickerOptions) {
     super({
-      onChange: (_, position) => {
-        if (this.options.direction === "vertical") {
-          const opacity = position.y / this.getSize().height;
-          options.color.setAlpha(opacity);
-        } else {
-          const opacity = position.x / this.getSize().width;
-          options.color.setAlpha(opacity);
-        }
+      onChange: (color) => {
+        options.color.setAlpha(color.getAlpha());
       },
       cursor: {
         size: () => this.getCursorSize(),
@@ -75,6 +70,17 @@ export class OpacityPicker extends CanvasPicker {
   onUnmount() {
     super.onUnmount();
     this.unregisterColorListener();
+  }
+
+  getColorAtPosition(x: number, y: number): Color | undefined {
+    const value = this.options.direction === "vertical" ? y : x;
+    const alpha =
+      value /
+      this.getSize()[
+        this.options.direction === "vertical" ? "height" : "width"
+      ];
+
+    return Color.fromRgb(...this.options.color.getRgb(), alpha);
   }
 
   // --------------------- rendering ---------------------

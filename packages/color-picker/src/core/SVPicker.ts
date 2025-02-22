@@ -1,6 +1,7 @@
 import { ColorPickerOptions } from "../types";
 
 import { CanvasPicker } from "./CanvasPicker.ts";
+import { Color } from "./Color.ts";
 
 export type SVPickerOptions = ColorPickerOptions;
 
@@ -44,6 +45,13 @@ export class SVPicker extends CanvasPicker {
   onUnmount() {
     super.onUnmount();
     this.unregisterColorListener();
+  }
+
+  getColorAtPosition(x: number, y: number): Color | undefined {
+    const { width, height } = this.getSize();
+    const s = x / width;
+    const v = 1 - y / height;
+    return Color.fromHsv(this.options.color.getHue(), s, v);
   }
 
   // --------------------- rendering ---------------------

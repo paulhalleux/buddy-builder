@@ -62,6 +62,21 @@ export class HuePicker extends CanvasPicker {
     }
   }
 
+  getColorAtPosition(x: number, y: number): Color | undefined {
+    const value = this.options.direction === "vertical" ? y : x;
+    const hue =
+      value /
+      this.getSize()[
+        this.options.direction === "vertical" ? "height" : "width"
+      ];
+
+    return Color.fromHsl(
+      hue,
+      this.options.color.getSaturation(),
+      this.options.color.getLightness(),
+    );
+  }
+
   // --------------------- rendering ---------------------
 
   renderCanvas(context: CanvasRenderingContext2D) {
@@ -82,13 +97,6 @@ export class HuePicker extends CanvasPicker {
 
     context.fillStyle = gradient;
     context.fillRect(0, 0, width, height);
-  }
-
-  protected getColorAtPosition(x: number, y: number): Color | null {
-    if (this.options.direction === "vertical") {
-      return super.getColorAtPosition(this.getSize().width / 2, y);
-    }
-    return super.getColorAtPosition(x, this.getSize().height / 2);
   }
 
   private getCursorSize() {

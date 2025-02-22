@@ -2,6 +2,7 @@ import {
   hexToRgba,
   hslToHsv,
   hslToRgb,
+  HSVtoRGB,
   hueToRgb,
   rgbToHsl,
 } from "../utils/color.ts";
@@ -47,6 +48,10 @@ export class Color {
 
   static fromHex(hex: string) {
     return Color.fromRgb(...hexToRgba(hex));
+  }
+
+  static fromHsv(h: number, s: number, v: number, a: number = 1) {
+    return Color.fromRgb(...HSVtoRGB(h, s, v), a);
   }
 
   setColor(color: Color) {
